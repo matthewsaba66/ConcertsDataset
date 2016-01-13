@@ -20,8 +20,8 @@ import model.Location;
 public class GoogleSearcher {
 	private List<String> userAgents;
 
-	
-	
+
+
 	public GoogleSearcher() throws IOException {
 		super();
 		this.userAgents = mkUAlist();
@@ -53,21 +53,24 @@ public class GoogleSearcher {
 
 				String pages = stats.replace(".", "");
 				return Long.parseLong(extractNumber(pages));
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			catch (IndexOutOfBoundsException e){
-				//se finisco qui vuol dire che l'user agent non è valido, quindi lo rimuovo dalla lista e rieto
+				//se finisco qui vuol dire che l'user agent non è valido, quindi lo rimuovo dalla lista e ripeto
 				userAgents.remove(userAgents.indexOf(userAgent));
 				//if (++count == maxTries) throw e;
+			}
+			catch (NumberFormatException e){
+				return 0;
 			}
 		}
 		//return "null";
 	}
-	
-	
-	
+
+
+
 	private List<String> mkUAlist() throws IOException {
 		//metodo 1 = torna la lista con le righe del file
 		BufferedReader in = new BufferedReader(new FileReader("user-agents/user-agents.txt"));
@@ -102,7 +105,7 @@ public class GoogleSearcher {
 		}
 		return sb.toString();
 	}
-	
+
 	private static String translate(String city) {
 		switch (city){
 		case "Rome": city = "Roma"; break;

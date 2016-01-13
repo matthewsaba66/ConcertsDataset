@@ -62,6 +62,9 @@ public class GoogleSearcherNews {
 				userAgents.remove(userAgents.indexOf(userAgent));
 				//if (++count == maxTries) throw e;
 			}
+			catch (NumberFormatException e){
+				return 0;
+			}
 		}
 		//return "null";
 	}

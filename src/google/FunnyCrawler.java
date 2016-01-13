@@ -28,7 +28,7 @@ public class FunnyCrawler {
 	public static void main(String[] args) throws IOException {
 
 		FunnyCrawler obj = new FunnyCrawler();
-		String result = obj.getDataFromGoogle("vasco rossi roma");
+		String result = obj.getDataFromGoogle("Chantal Acda with The Leisure Society Chiesa Evangelica Metodista");
 		System.out.println(extractNumber(result));
 
 	}
