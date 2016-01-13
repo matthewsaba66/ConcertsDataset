@@ -14,11 +14,13 @@ public class Measurement {
 	private int twitter_last24h;
 	private int twitter_last24hAuthorOnly;
 	private long google_foundPages;
+	private long google_foundNewsPages;
+	
 	
 	
 	public Measurement(int id, String date, int event, int bing_web, int bing_news, 
 			int facebook_measurement, double twitter_measurement, int twitter_last24h,
-			int twitter_last24hAuthorOnly, long google_foundPages) {
+			int twitter_last24hAuthorOnly, long google_foundPages, long google_foundNewsPages) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -30,10 +32,11 @@ public class Measurement {
 		this.twitter_last24h = twitter_last24h;
 		this.twitter_last24hAuthorOnly = twitter_last24hAuthorOnly;
 		this.google_foundPages = google_foundPages;
+		this.google_foundNewsPages = google_foundNewsPages;
 	}
 	public Measurement(String date, int event, int bing_web, int bing_news,
 			int facebook_measurement, double twitter_last10, int twitter_last24h, 
-			int twitter_last24hAuthorOnly, long google_foundPages) {
+			int twitter_last24hAuthorOnly, long google_foundPages, long google_foundNewsPages) {
 		super();
 		this.date = date;
 		this.event = event;
@@ -44,6 +47,7 @@ public class Measurement {
 		this.twitter_last24h = twitter_last24h;
 		this.twitter_last24hAuthorOnly = twitter_last24hAuthorOnly;
 		this.google_foundPages = google_foundPages;
+		this.google_foundNewsPages = google_foundNewsPages;
 	}
 	
 	public int getId() {
@@ -106,12 +110,19 @@ public class Measurement {
 	public void setGoogle_foundPages(long google_foundPages) {
 		this.google_foundPages = google_foundPages;
 	}
+	public long getGoogle_foundNewsPages() {
+		return google_foundNewsPages;
+	}
+	public void setGoogle_foundNewsPages(long google_foundNewsPages) {
+		this.google_foundNewsPages = google_foundNewsPages;
+	}
 	@Override
 	public String toString() {
 		return "Measurement [id=" + id + ", date=" + date + ", event=" + event + ", bing_web=" + bing_web
 				+ ", bing_news=" + bing_news + ", facebook_measurement=" + facebook_measurement + ", twitter_last10="
 				+ twitter_last10 + ", twitter_last24h=" + twitter_last24h + ", twitter_last24hAuthorOnly="
-				+ twitter_last24hAuthorOnly + ", google_foundPages=" + google_foundPages + "]";
+				+ twitter_last24hAuthorOnly + ", google_foundPages=" + google_foundPages + ", google_foundNewsPages="
+				+ google_foundNewsPages + "]";
 	}
 
 

@@ -16,6 +16,7 @@ import dao.MeasurementDAOImpl;
 import facebook.FacebookSearch;
 import facebook4j.FacebookException;
 import google.GoogleSearcher;
+import google.GoogleSearcherNews;
 import model.Event;
 import model.Location;
 import model.Measurement;
@@ -34,14 +35,15 @@ public class MeasurementsPicker {
 
 		MeasurementDAOImpl daoMeas = new MeasurementDAOImpl();
 		GoogleSearcher googleSearcher = new GoogleSearcher();
+		GoogleSearcherNews googleSearcherNews = new GoogleSearcherNews();
 		int i = 1;
 		for (Event event : eventList){
 			String eventDate = event.getDate().replaceAll("-", "/");
 			if (dateFormat.parse(eventDate).compareTo(today) == 0 || dateFormat.parse(eventDate).compareTo(today) == 1){
-				if (i%175==0){
+				if (i%140==0){
 					//wait 16 minutes
 					try {
-						Thread.sleep(1000*60*15);                 //1000 milliseconds is one second.
+						Thread.sleep(1000*60*16);                 //1000 milliseconds is one second.
 					} catch(InterruptedException ex) {
 						Thread.currentThread().interrupt();
 					}
@@ -60,20 +62,20 @@ public class MeasurementsPicker {
 				//twitter
 				double twitter = TwitterSearch.getLast10Density(event, venue);
 				
-				//google
-				long google = googleSearcher.getFoundPages(event, venue);
+				//google pages
+				long googlePages = googleSearcher.getFoundPages(event, venue);
+				
+				//google news
+				long googleNews = googleSearcherNews.getFoundPages(event, venue);
 
 				Measurement measurement = new Measurement(dateFormat.format(new Date()), event.getId(),
-						bing_web, bing_news, facebook, twitter, 0, 0, google);
+						bing_web, bing_news, facebook, twitter, 0, 0, googlePages, googleNews);
 				System.out.println(measurement.toString());
 				daoMeas.insertMeasurement(measurement);
 
 				i++;
-
-				//System.out.println("accetto: " + event.getDate() + " " + eventDate +"		" + dateFormat.parse(eventDate).compareTo(today) );
 			}
 			else {
-				//System.out.println("rifiuto: " + event.getDate() + " " + eventDate + "		" + dateFormat.parse(eventDate).compareTo(today) );
 				i++;
 			}
 		}

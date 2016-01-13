@@ -21,12 +21,23 @@ import model.Measurement;
 public class OldLast24hTweets {
 
 	private static MeasurementDAOImpl measurementDAOImpl = new MeasurementDAOImpl();
+	private static EventDAOImpl eventDAOImpl = new EventDAOImpl();
+	private static LocationDAOImpl locationDAOImpl = new LocationDAOImpl();
+	
+	public static void main(String[] args) throws SQLException, ParseException, IOException{
+		List<Measurement> measurements = measurementDAOImpl.getMeasurements();
+		//last24h(measurements);
+		//last24hAuthorsOnly(measurements);
+		last24hCombined(measurements, "2016/01/02");
+		last24hCombined(measurements, "2016/01/03");
+
+		//test();
+	}
 
 
 	public static void test() throws SQLException, ParseException, IOException {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		EventDAOImpl eventDAOImpl = new EventDAOImpl();
-		LocationDAOImpl locationDAOImpl = new LocationDAOImpl();
+		
 		String date = dateFormat.format(new Date());
 		Date today = dateFormat.parse(date);
 		int i = 0;
@@ -73,8 +84,7 @@ public class OldLast24hTweets {
 
 	public static void last24h(List<Measurement> measurements) throws SQLException, ParseException, IOException{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		EventDAOImpl eventDAOImpl = new EventDAOImpl();
-		LocationDAOImpl locationDAOImpl = new LocationDAOImpl();
+
 		String date = dateFormat.format(new Date());
 		Date today = dateFormat.parse(date);
 		for (Measurement m : measurements){
@@ -101,7 +111,6 @@ public class OldLast24hTweets {
 
 	public static void last24hAuthorsOnly(List<Measurement> measurements) throws SQLException, ParseException, IOException{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		EventDAOImpl eventDAOImpl = new EventDAOImpl();
 		String date = dateFormat.format(new Date());
 		Date today = dateFormat.parse(date);
 		for (Measurement m : measurements){
@@ -126,10 +135,8 @@ public class OldLast24hTweets {
 
 	public static void last24hCombined(List<Measurement> measurements, String dateToCheck) throws SQLException, ParseException, IOException{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		EventDAOImpl eventDAOImpl = new EventDAOImpl();
-		LocationDAOImpl locationDAOImpl = new LocationDAOImpl();
-		String date = dateFormat.format(new Date());
-		Date today = dateFormat.parse(date);
+		//String date = dateFormat.format(new Date());
+		//Date today = dateFormat.parse(date);
 		List<Measurement> measurementsDateToCheck = new ArrayList<Measurement>();
 		//filtro solo date di interesse
 		for (Measurement measurement : measurements) {
@@ -139,10 +146,11 @@ public class OldLast24hTweets {
 		//int total = measurementsDate.size();
 		int i = 0;
 		for (Measurement m : measurementsDateToCheck){
-			Date measurementDate = dateFormat.parse(m.getDate()); 
+			//Date measurementDate = dateFormat.parse(m.getDate()); 
 			//solo se la data è minore di oggi
 			//if (measurementDate.before(today)){
-			System.out.println("misurazione numero: " + i + " su " + measurementsDateToCheck.size() + " misurazioni");
+			System.out.println("misurazione numero: " + i + " su " + measurementsDateToCheck.size() + 
+					" misurazioni, data: " + dateToCheck);
 			Event event = eventDAOImpl.getEvent(m.getEvent());
 			Location location = locationDAOImpl.getLocation(event.getLocation());
 			String dateSince = m.getDate().replaceAll("/", "-");
@@ -172,18 +180,6 @@ public class OldLast24hTweets {
 		System.out.println("rilevata data: " + dateToCheck);
 
 	}
-
-
-	public static void main(String[] args) throws SQLException, ParseException, IOException{
-		List<Measurement> measurements = measurementDAOImpl.getMeasurements();
-		//last24h(measurements);
-		//last24hAuthorsOnly(measurements);
-		last24hCombined(measurements, "2015/12/03");
-		//test();
-	}
-
-
-
 	private static String translate(String city) {
 		switch (city){
 		case "Rome": city = "Roma"; break;

@@ -21,7 +21,10 @@ public class BingSearch {
 		//int[] articles = new int[2];
 		String searchText = "muse milan mediolanum forum";
 		searchText = searchText.replaceAll(" ", "%20");
-		String accountKey="kX5iTCEfcsXt+CfJ1utIjp3108TujtRbXpMZrfZPYL4";
+		String accountKey="kX5iTCEfcsXt+CfJ1utIjp3108TujtRbXpMZrfZPYL4";  
+		//chiave 1 con account hotmail = "kX5iTCEfcsXt+CfJ1utIjp3108TujtRbXpMZrfZPYL4"
+		//chiave 2 con account universitario da ottenere = ""
+		
 
 		byte[] accountKeyBytes = Base64.encodeBase64((accountKey + ":" + accountKey).getBytes());
 		String accountKeyEnc = new String(accountKeyBytes);

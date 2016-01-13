@@ -1,6 +1,5 @@
 package google;
 
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,37 +7,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class FunnyCrawler {
+import model.Event;
+import model.Location;
 
-	//private static Pattern patternDomainName;
-	//private Matcher matcher;
-	//private static final String DOMAIN_NAME_PATTERN 
-	//= "([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}";
-	/*static {
-		patternDomainName = Pattern.compile(DOMAIN_NAME_PATTERN);
-	}*/
 
-	public static void main(String[] args) throws IOException {
+public class GoogleSearcherNews {
+	private List<String> userAgents;
 
-		FunnyCrawler obj = new FunnyCrawler();
-		String result = obj.getDataFromGoogle("vasco rossi roma");
-		System.out.println(extractNumber(result));
-
+	
+	
+	public GoogleSearcherNews() throws IOException {
+		super();
+		this.userAgents = mkUAlist();
 	}
 
-	private String getDataFromGoogle(String query) throws IOException {
 
-		String request = "https://www.google.com/search?q=" + query /*+ "&num=20"*/+ "&tbm=nws";
+
+	public long getFoundPages(Event event, Location location) throws IOException {
+		String query = event.getArtist() + " " + translate(location.getCity()) + " " + location.getPlace();
+		String request = "https://www.google.com/search?q=" + query /*+ "&num=20"*/ + "&tbm=nws";
 		//System.out.println("Sending request..." + request);
 		String sub = null;
-		List<String> userAgents = mkUAlist();
 		String userAgent = "";
 		//int count = 0;
 		//int maxTries = 10;
@@ -56,21 +51,23 @@ public class FunnyCrawler {
 				Element link = links.get(0);
 				String stats = link.text();
 
-				sub = stats.replace(".", "");
-				return sub;
+				String pages = stats.replace(".", "");
+				return Long.parseLong(extractNumber(pages));
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			catch (IndexOutOfBoundsException e){
+				//se finisco qui vuol dire che l'user agent non è valido, quindi lo rimuovo dalla lista e rieto
 				userAgents.remove(userAgents.indexOf(userAgent));
 				//if (++count == maxTries) throw e;
 			}
 		}
 		//return "null";
 	}
-
-
+	
+	
+	
 	private List<String> mkUAlist() throws IOException {
 		//metodo 1 = torna la lista con le righe del file
 		BufferedReader in = new BufferedReader(new FileReader("user-agents/user-agents.txt"));
@@ -104,6 +101,19 @@ public class FunnyCrawler {
 			}
 		}
 		return sb.toString();
+	}
+	
+	private static String translate(String city) {
+		switch (city){
+		case "Rome": city = "Roma"; break;
+		case "Milan": city = "Milano"; break;
+		case "Turin": city = "Torino"; break;
+		case "Naples": city = "Napoli";	break;
+		case "Florence": city = "Firenze"; break;
+		case "Bari": city = "Bari"; break;
+		case "Verona": city = "Verona"; break;
+		}
+		return city;
 	}
 
 }

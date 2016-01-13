@@ -59,12 +59,13 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 			int twitter_last24h = resultSet.getInt(8);
 			int twitter_last24hAuthorOnly = resultSet.getInt(9);
 			long google_foundPages = resultSet.getLong(10);
+			long google_foundNewsPages = resultSet.getLong(11);
 
 
 
 			Measurement measurement = new Measurement(id, date, event, bingWeb, bingNews,
 					facebookMeasurement, twitter_last10, twitter_last24h, twitter_last24hAuthorOnly,
-					google_foundPages);
+					google_foundPages, google_foundNewsPages);
 			measurements.add(measurement);
 		}
 		statement.close();
@@ -92,11 +93,13 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 		int twitter_last24h = resultSet.getInt(8);
 		int twitter_last24hAuthorOnly = resultSet.getInt(9);
 		long google_foundPages = resultSet.getLong(10);
+		long google_foundNewsPages = resultSet.getLong(11);
+
 
 
 		Measurement measurement = new Measurement(idM, date, event, bingWeb, bingNews,
 				facebookMeasurement, twitter_last10, twitter_last24h, twitter_last24hAuthorOnly, 
-				google_foundPages);
+				google_foundPages, google_foundNewsPages);
 		statement.close();
 		return measurement;
 	}
@@ -112,8 +115,8 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 				.prepareStatement("insert into  concertsdataset.measurements "
 						+ "(date, event, bing_web, bing_news, facebook_measurement, "
 						+ "twitter_last10, twitter_last24h, twitter_last24hAuthorOnly, "
-						+ "google_foundPages)"
-						+ " values (  ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+						+ "google_foundPages, google_foundNewsPages)"
+						+ " values (  ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
 
 		// Parameters start with 1
 
@@ -126,6 +129,7 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 		preparedStatement.setInt(7, measurement.getTwitter_last24h());
 		preparedStatement.setInt(8, measurement.getTwitter_last24hAuthorOnly());
 		preparedStatement.setLong(9, measurement.getGoogle_foundPages());
+		preparedStatement.setLong(10, measurement.getGoogle_foundNewsPages());
 
 		preparedStatement.executeUpdate();
 		statement.close();
@@ -173,11 +177,13 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 		int twitter_last24h = resultSet.getInt(8);
 		int twitter_last24hAuthorOnly = resultSet.getInt(9);
 		long google_foundPages = resultSet.getLong(10);
+		long google_foundNewsPages = resultSet.getLong(11);
+
 
 
 		measurement = new Measurement
 				(idM, date, event, bing_web, big_news, facebook_measurement, twitter_last10, 
-						twitter_last24h, twitter_last24hAuthorOnly, google_foundPages);
+						twitter_last24h, twitter_last24hAuthorOnly, google_foundPages, google_foundNewsPages);
 		statement.close();
 		return measurement;
 	}
@@ -223,12 +229,14 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 			int twitter_last24h = resultSet.getInt(8);
 			int twitter_last24hAuthorOnly = resultSet.getInt(9);
 			long google_foundPages = resultSet.getLong(10);
+			long google_foundNewsPages = resultSet.getLong(11);
+
 
 
 
 			Measurement measurement = new Measurement(id, date, event, bingWeb, bingNews,
 					facebookMeasurement, twitter_last10, twitter_last24h, twitter_last24hAuthorOnly, 
-					google_foundPages);
+					google_foundPages, google_foundNewsPages);
 			measurements.add(measurement);
 		}
 		statement.close();
@@ -275,7 +283,7 @@ public class MeasurementDAOImpl implements MeasurementDAO {
 	
 	public static void main(String[] args) throws SQLException{
 		Measurement measurement = new Measurement("28/19/2014",2222, 333333, 4444, 5555, 
-				66666, 9999999, 888888, 555555);
+				66666, 9999999, 888888, 555555, 77777777);
 		MeasurementDAOImpl daoImpl = new MeasurementDAOImpl();
 		daoImpl.insertMeasurement(measurement);
 	}
