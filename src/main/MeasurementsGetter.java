@@ -23,7 +23,7 @@ import model.Measurement;
 import twitter.TwitterSearch;
 import twitter4j.TwitterException;
 
-public class MeasurementsPicker {
+public class MeasurementsGetter {
 
 	public static void main(String[] args) throws SQLException, FacebookException, TwitterException, ParseException, NumberFormatException, IOException{
 		EventDAOImpl daoEvents = new EventDAOImpl();
@@ -37,13 +37,14 @@ public class MeasurementsPicker {
 		GoogleSearcher googleSearcher = new GoogleSearcher();
 		GoogleSearcherNews googleSearcherNews = new GoogleSearcherNews();
 		int i = 1;
-		for (Event event : eventList){
+		System.out.println(eventList.size());
+		for (Event event : eventList){//*/for (int i = 279; i < eventList.size(); i++){ Event event = eventList.get(i);
 			String eventDate = event.getDate().replaceAll("-", "/");
 			if (dateFormat.parse(eventDate).compareTo(today) == 0 || dateFormat.parse(eventDate).compareTo(today) == 1){
 				if (i%140==0){
 					//wait 16 minutes
 					try {
-						Thread.sleep(1000*60*16);                 //1000 milliseconds is one second.
+						Thread.sleep(1000*60*20);                 //1000 milliseconds is one second.
 					} catch(InterruptedException ex) {
 						Thread.currentThread().interrupt();
 					}
@@ -61,10 +62,10 @@ public class MeasurementsPicker {
 
 				//twitter
 				double twitter = TwitterSearch.getLast10Density(event, venue);
-				
+
 				//google pages
 				long googlePages = googleSearcher.getFoundPages(event, venue);
-				
+
 				//google news
 				long googleNews = googleSearcherNews.getFoundPages(event, venue);
 

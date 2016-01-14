@@ -18,18 +18,18 @@ import model.Event;
 import model.Location;
 import model.Measurement;
 
-public class OldLast24hTweets {
+public class Last24hTweets {
 
 	private static MeasurementDAOImpl measurementDAOImpl = new MeasurementDAOImpl();
 	private static EventDAOImpl eventDAOImpl = new EventDAOImpl();
 	private static LocationDAOImpl locationDAOImpl = new LocationDAOImpl();
-	
+
 	public static void main(String[] args) throws SQLException, ParseException, IOException{
 		List<Measurement> measurements = measurementDAOImpl.getMeasurements();
 		//last24h(measurements);
 		//last24hAuthorsOnly(measurements);
-		last24hCombined(measurements, "2016/01/02");
-		last24hCombined(measurements, "2016/01/03");
+		//last24hCombined(measurements, "2016/01/02");
+		last24hCombined(measurements, "2016/01/13");
 
 		//test();
 	}
@@ -37,7 +37,7 @@ public class OldLast24hTweets {
 
 	public static void test() throws SQLException, ParseException, IOException {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		
+
 		String date = dateFormat.format(new Date());
 		Date today = dateFormat.parse(date);
 		int i = 0;
@@ -146,6 +146,8 @@ public class OldLast24hTweets {
 		//int total = measurementsDate.size();
 		int i = 0;
 		for (Measurement m : measurementsDateToCheck){
+//			if (measurementsDateToCheck.indexOf(m) > 163){
+			
 			//Date measurementDate = dateFormat.parse(m.getDate()); 
 			//solo se la data è minore di oggi
 			//if (measurementDate.before(today)){
@@ -174,8 +176,9 @@ public class OldLast24hTweets {
 			measurementDAOImpl.updateMeasurementTwitterLast24Authors(m);
 
 			System.out.println(m.toString());
+
+//			}
 			i++;
-			//}
 		}
 		System.out.println("rilevata data: " + dateToCheck);
 
