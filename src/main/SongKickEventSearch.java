@@ -30,7 +30,7 @@ import model.Location;
  * 2-get all events in the metro-area-id and creates a list "eventList" 
  * 
  * */
-public class SongKickSearch {
+public class SongKickEventSearch {
 
 	private final static String apiKey = "rBfCuvN98YPUeD4r";
 

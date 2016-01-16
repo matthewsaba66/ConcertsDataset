@@ -44,7 +44,7 @@ public class MeasurementsGetter {
 				if (i%140==0){
 					//wait 16 minutes
 					try {
-						Thread.sleep(1000*60*20);                 //1000 milliseconds is one second.
+						Thread.sleep(1000*60*16);                 //1000 milliseconds is one second.
 					} catch(InterruptedException ex) {
 						Thread.currentThread().interrupt();
 					}

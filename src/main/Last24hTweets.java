@@ -29,7 +29,7 @@ public class Last24hTweets {
 		//last24h(measurements);
 		//last24hAuthorsOnly(measurements);
 		//last24hCombined(measurements, "2016/01/02");
-		last24hCombined(measurements, "2016/01/13");
+		last24hCombined(measurements, "2016/01/14");
 
 		//test();
 	}
